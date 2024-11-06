@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Listing</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <div class="logo">Zillow</div>
+            <nav class="nav-links">
+                <a href="#">Buy</a>
+                <a href="#">Rent</a>
+                <a href="#">Sell</a>
+                <a href="#">Manage Rentals</a>
+                <a href="#">Advertise</a>
+                <a href="#">Help</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="property-details" id="main-property-details">
+        <div class="property-main-info">
+            <h1 id="price"></h1>
+            <p id="address"></p>
+            <div class="property-features" id="features"></div>
+        </div>
+        <div class="image-gallery">
+            <img id="main-image" src="" alt="Main Property Image" class="main-image">
+            <div class="thumbnail-grid" id="thumbnail-grid"></div>
+            <button class="view-all-button" onclick="window.open('photo-gallery.html', '_blank')">See all photos</button>
+        </div>
+        <div class="special-features">
+            <h2>What's special</h2>
+            <ul id="special-features-list"></ul>
+        </div>
+        <div class="details">
+            <h3>Welcome to your new home in Fairview!</h3>
+            <p id="description"></p>
+        </div>
+        <div class="contact-agent">
+            <button>Request a tour</button>
+            <button>Contact agent</button>
+        </div>
+    </div>
+
+    <div class="property-details" id="additional-details">
+        <div class="property-taxes">
+            <h2>Property Taxes and Assessment Data</h2>
+            <table id="tax-assessment-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Tax</th>
+                        <th>Assessment</th>
+                    </tr>
+                </thead>
+                <tbody id="tax-assessment-body"></tbody>
+            </table>
+        </div>
+
+        <div class="affordability-calculator">
+            <h2>Affordability Calculator</h2>
+            <label for="home-price">Home Price:</label>
+            <input type="number" id="home-price" value="" step="1000">
+
+            <label for="down-payment">Down Payment (%):</label>
+            <input type="number" id="down-payment" value="20" step="1">
+
+            <label for="interest-rate">Interest Rate (%):</label>
+            <input type="number" id="interest-rate" value="3.5" step="0.1">
+
+            <p id="estimated-payment">Your estimated payment is $0 per month</p>
+        </div>
+    </div>
+
+    <div class="similar-homes" id="similar-homes">
+        <h2>Similar Homes</h2>
+        <div id="similar-homes-list"></div>
+    </div>
+    
+
+    <script>
+        fetch('properties.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log("Data fetched:", data);
+
+                document.getElementById('price').textContent = data.price;
+                document.getElementById('address').textContent = data.address;
+                document.getElementById('main-image').src = data.mainImage;
+                document.getElementById('home-price').value = parseFloat(data.price.replace(/[^0-9.-]+/g, ""));
+
+                const features = data.features;
+                document.getElementById('features').innerHTML = `
+                    <span>${features.beds}</span> | 
+                    <span>${features.baths}</span> | 
+                    <span>${features.size}</span>
+                `;
+
+                const specialFeaturesList = document.getElementById('special-features-list');
+                data.specialFeatures.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    specialFeaturesList.appendChild(li);
+                });
+
+                document.getElementById('description').textContent = data.description;
+
+                const taxAssessmentBody = document.getElementById('tax-assessment-body');
+                data.taxAssessment.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.year}</td>
+                        <td>${item.tax}</td>
+                        <td>${item.assessment}</td>
+                    `;
+                    taxAssessmentBody.appendChild(row);
+                });
+
+                const similarHomesList = document.getElementById('similar-homes-list');
+                data.similarHomes.forEach(home => {
+                    const homeCard = document.createElement('div');
+                    homeCard.classList.add('home-card');
+                    homeCard.innerHTML = `
+                        <img src="${home.mainImage}" alt="Image of ${home.address}">
+                        <h3>${home.price}</h3>
+                        <p>${home.address}</p>
+                        <p>${home.features.beds} | ${home.features.baths} | ${home.features.size}</p>
+                        <p>${home.description}</p>
+                    `;
+                    similarHomesList.appendChild(homeCard);
+                });
+
+                const homePriceInput = document.getElementById('home-price');
+                const downPaymentInput = document.getElementById('down-payment');
+                const interestRateInput = document.getElementById('interest-rate');
+                const estimatedPayment = document.getElementById('estimated-payment');
+
+                function calculateMortgage() {
+                    const principal = homePriceInput.value - (homePriceInput.value * (downPaymentInput.value / 100));
+                    const interestRate = (interestRateInput.value / 100) / 12;
+                    const payments = 30 * 12; // 30 years
+
+                    const monthlyPayment = (principal * interestRate) / (1 - Math.pow(1 + interestRate, -payments));
+                    estimatedPayment.textContent = `Your estimated payment is $${monthlyPayment.toFixed(2)} per month`;
+                }
+
+                homePriceInput.addEventListener('input', calculateMortgage);
+                downPaymentInput.addEventListener('input', calculateMortgage);
+                interestRateInput.addEventListener('input', calculateMortgage);
+                calculateMortgage();
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+
+    </script>
+</body>
+</html>
