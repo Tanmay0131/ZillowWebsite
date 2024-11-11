@@ -24,7 +24,7 @@ body {
 .nav-bar .logo {
     font-size: 1.5em;
     font-weight: bold;
-    color: #b6886d;
+    color: #945734;
 }
 
 .nav-links a, #left-nav > a, nav > a {
@@ -33,7 +33,7 @@ body {
     text-decoration: none;
     font-size: 1em;
     transition: all 0.05s ease-in;
-    color: #dd9871;
+    color: #945734;
 }
 
 #left-nav {

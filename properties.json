@@ -1,35 +1,39 @@
 {
-    "price": "$285,000",
-    "address": "6428 Hearthstone Ln, Erie, PA 16505",
-    "features": {
-      "beds": "3 beds",
-      "baths": "2 baths",
-      "size": "1,476 sqft"
-    },
-    "specialFeatures": [
-      "Three Spacious Bedrooms",
-      "New Fixtures",
-      "Cozy Lower-Level Great Room",
-      "Freshly Painted Walls",
-      "Fenced Backyard",
-      "Nice Fireplace",
-      "Brand-New Flooring"
-    ],
-    "description": "This lovely place features freshly painted walls, brand-new flooring, and new fixtures that make it feel warm and inviting. With three spacious bedrooms, there’s plenty of room for everyone. You’ll love the cozy lower-level great room with its nice fireplace—perfect for gatherings! Plus, you’ll appreciate the convenience of a two-car garage and a fenced backyard for outdoor fun.",
-    "imageGallery": [
-      "house.jpg",
-      "img.jpeg",
-      "img.jpeg",
-      "img.jpeg"
-    ],
-    "mainImage": "img.jpeg",
-    "taxAssessment": [
-      { "year": "2022", "tax": "$4,500", "assessment": "$280,000" },
-      { "year": "2021", "tax": "$4,300", "assessment": "$275,000" },
-      { "year": "2020", "tax": "$4,100", "assessment": "$270,000" }
-    ],
-    "similarHomes": [
+    "homes": [
       {
+        "id": "1",
+        "price": "$285,000",
+        "address": "6428 Hearthstone Ln, Erie, PA 16505",
+        "features": {
+          "beds": "3 beds",
+          "baths": "2 baths",
+          "size": "1,476 sqft"
+        },
+        "specialFeatures": [
+          "Three Spacious Bedrooms",
+          "New Fixtures",
+          "Cozy Lower-Level Great Room",
+          "Freshly Painted Walls",
+          "Fenced Backyard",
+          "Nice Fireplace",
+          "Brand-New Flooring"
+        ],
+        "description": "This lovely place features freshly painted walls, brand-new flooring, and new fixtures that make it feel warm and inviting. With three spacious bedrooms, there’s plenty of room for everyone. You’ll love the cozy lower-level great room with its nice fireplace—perfect for gatherings! Plus, you’ll appreciate the convenience of a two-car garage and a fenced backyard for outdoor fun.",
+        "imageGallery": [
+          "house.jpg",
+          "img.jpeg",
+          "img.jpeg",
+          "img.jpeg"
+        ],
+        "mainImage": "img.jpeg",
+        "taxAssessment": [
+          { "year": "2022", "tax": "$4,500", "assessment": "$280,000" },
+          { "year": "2021", "tax": "$4,300", "assessment": "$275,000" },
+          { "year": "2020", "tax": "$4,100", "assessment": "$270,000" }
+        ]
+      },
+      {
+        "id": "2",
         "price": "$275,000",
         "address": "1234 Pineview Dr, Erie, PA 16506",
         "features": {
@@ -45,9 +49,21 @@
           "Landscaped Backyard"
         ],
         "description": "A beautifully maintained home with an updated kitchen, spacious living areas, and large windows. Ideal for families with a two-car garage and a private, landscaped backyard.",
+        "imageGallery": [
+          "house.jpg",
+          "img.jpeg",
+          "img.jpeg",
+          "img.jpeg"
+        ],
+        "taxAssessment": [
+          { "year": "2022", "tax": "$4,500", "assessment": "$280,000" },
+          { "year": "2021", "tax": "$4,300", "assessment": "$275,000" },
+          { "year": "2020", "tax": "$4,100", "assessment": "$270,000" }
+        ],
         "mainImage": "img.jpeg"
       },
       {
+        "id": "3",
         "price": "$290,000",
         "address": "4321 Maplewood Ave, Erie, PA 16506",
         "features": {
@@ -63,9 +79,21 @@
           "Extra Storage Space"
         ],
         "description": "Enjoy modern updates throughout this home with an open floor plan, renovated bathrooms, and a spacious covered patio perfect for gatherings.",
+        "imageGallery": [
+          "house.jpg",
+          "img.jpeg",
+          "img.jpeg",
+          "img.jpeg"
+        ],
+        "taxAssessment": [
+          { "year": "2022", "tax": "$4,500", "assessment": "$280,000" },
+          { "year": "2021", "tax": "$4,300", "assessment": "$275,000" },
+          { "year": "2020", "tax": "$4,100", "assessment": "$270,000" }
+        ],
         "mainImage": "img.jpeg"
       },
       {
+        "id": "4",
         "price": "$280,000",
         "address": "5678 Oak St, Erie, PA 16505",
         "features": {
@@ -81,6 +109,17 @@
           "Close to Schools"
         ],
         "description": "This home offers a comfortable layout with hardwood floors, new appliances, and a large backyard. The finished basement provides extra living space.",
+        "imageGallery": [
+          "house.jpg",
+          "img.jpeg",
+          "img.jpeg",
+          "img.jpeg"
+        ],
+        "taxAssessment": [
+          { "year": "2022", "tax": "$4,500", "assessment": "$280,000" },
+          { "year": "2021", "tax": "$4,300", "assessment": "$275,000" },
+          { "year": "2020", "tax": "$4,100", "assessment": "$270,000" }
+        ],
         "mainImage": "img.jpeg"
       }
     ]

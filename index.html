@@ -64,15 +64,18 @@
         <div class="affordability-calculator">
             <h2>Affordability Calculator</h2>
             <label for="home-price">Home Price:</label>
-            <input type="number" id="home-price" value="" step="1000">
-
+            <input type="number" id="home-price" value="250000" step="1000">
+        
             <label for="down-payment">Down Payment (%):</label>
             <input type="number" id="down-payment" value="20" step="1">
-
+        
             <label for="interest-rate">Interest Rate (%):</label>
             <input type="number" id="interest-rate" value="3.5" step="0.1">
-
-            <p id="estimated-payment">Your estimated payment is $0 per month</p>
+        
+            <label for="loan-term">Loan Term (years):</label>
+            <input type="number" id="loan-term" value="30" step="1">
+        
+            <p id="estimated-payment">Calculate</p>
         </div>
     </div>
 
@@ -85,78 +88,102 @@
     <style type="text/css">iframe { position: absolute; width: 100%; height: 100%; z-index: 999; }</style>    
 
     <script>
+        let properties;
+
         fetch('properties.json')
             .then(response => response.json())
             .then(data => {
-                console.log("Data fetched:", data);
+                properties = data.homes;
+                loadHomeById("1"); 
+            });
 
-                document.getElementById('price').textContent = data.price;
-                document.getElementById('address').textContent = data.address;
-                document.getElementById('main-image').src = data.mainImage;
-                document.getElementById('home-price').value = parseFloat(data.price.replace(/[^0-9.-]+/g, ""));
+        function loadHomeById(id) {
+            const home = properties.find(home => home.id === id);
+            if (!home) return;
 
-                const features = data.features;
-                document.getElementById('features').innerHTML = `
-                    <span>${features.beds}</span> | 
-                    <span>${features.baths}</span> | 
-                    <span>${features.size}</span>
+            document.getElementById('price').textContent = home.price;
+            document.getElementById('address').textContent = home.address;
+            document.getElementById('main-image').src = home.mainImage;
+            document.getElementById('home-price').value = parseFloat(home.price.replace(/[^0-9.-]+/g, ""));
+
+            document.getElementById('features').innerHTML = `
+                <span>${home.features.beds}</span> | 
+                <span>${home.features.baths}</span> | 
+                <span>${home.features.size}</span>
+            `;
+
+            const specialFeaturesList = document.getElementById('special-features-list');
+            specialFeaturesList.innerHTML = '';
+            home.specialFeatures.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                specialFeaturesList.appendChild(li);
+            });
+
+            document.getElementById('description').textContent = home.description;
+
+            const taxAssessmentBody = document.getElementById('tax-assessment-body');
+            taxAssessmentBody.innerHTML = '';
+            home.taxAssessment.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.year}</td>
+                    <td>${item.tax}</td>
+                    <td>${item.assessment}</td>
                 `;
+                taxAssessmentBody.appendChild(row);
+            });
 
-                const specialFeaturesList = document.getElementById('special-features-list');
-                data.specialFeatures.forEach(feature => {
-                    const li = document.createElement('li');
-                    li.textContent = feature;
-                    specialFeaturesList.appendChild(li);
-                });
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
 
-                document.getElementById('description').textContent = data.description;
+            document.getElementById('estimated-payment').textContent = 'Calculate'
 
-                const taxAssessmentBody = document.getElementById('tax-assessment-body');
-                data.taxAssessment.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${item.year}</td>
-                        <td>${item.tax}</td>
-                        <td>${item.assessment}</td>
-                    `;
-                    taxAssessmentBody.appendChild(row);
-                });
+            const similarHomesList = document.getElementById('similar-homes-list');
+            similarHomesList.innerHTML = '';
+            const otherHomes = properties.filter(h => h.id !== id).slice(0, 3);
+            otherHomes.forEach(similarHome => {
+                const homeCard = document.createElement('div');
+                homeCard.className = 'home-card';
+                homeCard.innerHTML = `
+                    <img src="${similarHome.mainImage}" alt="${similarHome.address}">
+                    <h4>${similarHome.price}</h4>
+                    <p>${similarHome.address}</p>
+                `;
+                homeCard.addEventListener('click', () => loadHomeById(similarHome.id));
+                similarHomesList.appendChild(homeCard);
+            });
+        }
 
-                const similarHomesList = document.getElementById('similar-homes-list');
-                data.similarHomes.forEach(home => {
-                    const homeCard = document.createElement('div');
-                    homeCard.classList.add('home-card');
-                    homeCard.innerHTML = `
-                        <img src="${home.mainImage}" alt="Image of ${home.address}">
-                        <h3>${home.price}</h3>
-                        <p>${home.address}</p>
-                        <p>${home.features.beds} | ${home.features.baths} | ${home.features.size}</p>
-                        <p>${home.description}</p>
-                    `;
-                    similarHomesList.appendChild(homeCard);
-                });
+        document.getElementById('home-price').addEventListener('input', calculateMortgage);
+        document.getElementById('down-payment').addEventListener('input', calculateMortgage);
+        document.getElementById('interest-rate').addEventListener('input', calculateMortgage);
+        document.getElementById('loan-term').addEventListener('input', calculateMortgage);
 
-                const homePriceInput = document.getElementById('home-price');
-                const downPaymentInput = document.getElementById('down-payment');
-                const interestRateInput = document.getElementById('interest-rate');
-                const estimatedPayment = document.getElementById('estimated-payment');
+        function calculateMortgage() {
+            const homePrice = parseFloat(document.getElementById('home-price').value) || 0;
+            const downPaymentPercent = parseFloat(document.getElementById('down-payment').value) || 20;
+            const loanTerm = parseInt(document.getElementById('loan-term').value) || 30;
+            const annualInterestRate = parseFloat(document.getElementById('interest-rate').value) || 3.5;
 
-                function calculateMortgage() {
-                    const principal = homePriceInput.value - (homePriceInput.value * (downPaymentInput.value / 100));
-                    const interestRate = (interestRateInput.value / 100) / 12;
-                    const payments = 30 * 12; // 30 years
+            const loanPrincipal = homePrice * (1 - downPaymentPercent / 100);
 
-                    const monthlyPayment = (principal * interestRate) / (1 - Math.pow(1 + interestRate, -payments));
-                    estimatedPayment.textContent = `Your estimated payment is $${monthlyPayment.toFixed(2)} per month`;
-                }
+            const monthlyInterestRate = (annualInterestRate / 100) / 12;
 
-                homePriceInput.addEventListener('input', calculateMortgage);
-                downPaymentInput.addEventListener('input', calculateMortgage);
-                interestRateInput.addEventListener('input', calculateMortgage);
-                calculateMortgage();
-            })
-            .catch(error => console.error('Error fetching data:', error));
+            const totalPayments = loanTerm * 12;
 
+            let monthlyPayment = 0;
+            if (monthlyInterestRate > 0) {
+                monthlyPayment = loanPrincipal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalPayments) /
+                                (Math.pow(1 + monthlyInterestRate, totalPayments) - 1);
+            } else {
+                monthlyPayment = loanPrincipal / totalPayments;
+            }
+
+            document.getElementById('estimated-payment').textContent = `$${monthlyPayment.toFixed(2)} per month`;
+        }
 
     </script>
 </body>
