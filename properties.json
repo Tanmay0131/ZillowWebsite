@@ -20,12 +20,12 @@
         ],
         "description": "This lovely place features freshly painted walls, brand-new flooring, and new fixtures that make it feel warm and inviting. With three spacious bedrooms, there’s plenty of room for everyone. You’ll love the cozy lower-level great room with its nice fireplace—perfect for gatherings! Plus, you’ll appreciate the convenience of a two-car garage and a fenced backyard for outdoor fun.",
         "imageGallery": [
-          "house.jpg",
-          "4xdrykr0bkbb1.jpg",
-          "serjs-smile-makes-me-smile-like-how-he-smiles-yk-what-i-mean-v0-x4y147fakvua1.jpg",
-          "klins.jpg"
+          "./images/house.jpg",
+          "./images/4xdrykr0bkbb1.jpg",
+          "./images/serjs-smile-makes-me-smile-like-how-he-smiles-yk-what-i-mean-v0-x4y147fakvua1.jpg",
+          "./images/klins.jpg"
         ],
-        "mainImage": "img.jpeg",
+        "mainImage": "./images/img.jpeg",
         "taxAssessment": [
           { "year": "2022", "tax": "$4,500", "assessment": "$280,000" },
           { "year": "2021", "tax": "$4,300", "assessment": "$275,000" },
@@ -50,17 +50,17 @@
         ],
         "description": "A beautifully maintained home with an updated kitchen, spacious living areas, and large windows. Ideal for families with a two-car garage and a private, landscaped backyard.",
         "imageGallery": [
-          "Media (1).jpg",
-          "Media (3).jpg",
-          "Media (4).jpg",
-          "Media (5).jpg"
+          "./images/Media (1).jpg",
+          "./images/Media (3).jpg",
+          "./images/Media (4).jpg",
+          "./images/Media (5).jpg"
         ],
         "taxAssessment": [
           { "year": "2022", "tax": "$4,500", "assessment": "$280,000" },
           { "year": "2021", "tax": "$4,300", "assessment": "$275,000" },
           { "year": "2020", "tax": "$4,100", "assessment": "$270,000" }
         ],
-        "mainImage": "Media.jpg"
+        "mainImage": "./images/Media.jpg"
       },
       {
         "id": "3",
@@ -80,17 +80,17 @@
         ],
         "description": "Enjoy modern updates throughout this home with an open floor plan, renovated bathrooms, and a spacious covered patio perfect for gatherings.",
         "imageGallery": [
-          "Media (6).jpg",
-          "Media (8).jpg",
-          "Media (9).jpg",
-          "Media (10).jpg"
+          "./images/Media (6).jpg",
+          "./images/Media (8).jpg",
+          "./images/Media (9).jpg",
+          "./images/Media (10).jpg"
         ],
         "taxAssessment": [
           { "year": "2022", "tax": "$4,500", "assessment": "$280,000" },
           { "year": "2021", "tax": "$4,300", "assessment": "$275,000" },
           { "year": "2020", "tax": "$4,100", "assessment": "$270,000" }
         ],
-        "mainImage": "Media (7).jpg"
+        "mainImage": "./images/Media (7).jpg"
       },
       {
         "id": "4",
@@ -110,17 +110,17 @@
         ],
         "description": "This home offers a comfortable layout with hardwood floors, new appliances, and a large backyard. The finished basement provides extra living space.",
         "imageGallery": [
-          "Media (11).jpg",
-          "Media (13).jpg",
-          "Media (14).jpg",
-          "img.jpeg"
+          "./images/Media (11).jpg",
+          "./images/Media (13).jpg",
+          "./images/Media (14).jpg",
+          "./images/img.jpeg"
         ],
         "taxAssessment": [
           { "year": "2022", "tax": "$4,500", "assessment": "$280,000" },
           { "year": "2021", "tax": "$4,300", "assessment": "$275,000" },
           { "year": "2020", "tax": "$4,100", "assessment": "$270,000" }
         ],
-        "mainImage": "Media (12).jpg"
+        "mainImage": "./images/Media (12).jpg"
       }
     ]
   }
