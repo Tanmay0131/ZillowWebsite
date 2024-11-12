@@ -13,20 +13,34 @@
     <div class="photo-gallery" id="photo-gallery"></div>
     
     <script>
+        // Function to get the propertyId from the URL
+        function getPropertyIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('propertyId');
+        }
+
+        const propertyId = getPropertyIdFromUrl();
+
         fetch('properties.json')
             .then(response => response.json())
             .then(data => {
+                const property = data.homes.find(home => home.id === propertyId);
+                if (!property) {
+                    console.error('Property not found');
+                    return;
+                }
+
                 const photoGallery = document.getElementById('photo-gallery');
                 
                 // Add the main image to the gallery
                 const mainImg = document.createElement('img');
-                mainImg.src = data.mainImage;
+                mainImg.src = property.mainImage;
                 mainImg.alt = "Main Property Image";
                 mainImg.className = "gallery-image";
                 photoGallery.appendChild(mainImg);
                 
                 // Add each image from the image gallery
-                data.imageGallery.forEach(image => {
+                property.imageGallery.forEach(image => {
                     const imgElement = document.createElement('img');
                     imgElement.src = image;
                     imgElement.alt = "Gallery Image";

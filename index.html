@@ -29,8 +29,11 @@
         </div>
         <div class="image-gallery">
             <img id="main-image" src="" alt="Main Property Image" class="main-image">
-            <div class="thumbnail-grid" id="thumbnail-grid"></div>
-            <button class="view-all-button" onclick="window.open('photo-gallery.html', '_blank')">See all photos</button>
+            <div class="thumbnail-container">
+                <img id="second-image" src="" alt="Secondary Property Image" class="thumbnail">
+                <img id="third-image" src="" alt="Third Property Image" class="thumbnail">
+            </div>
+            <button class="view-all-button" onclick="openPhotoGallery()">See all photos</button>
         </div>
         <div class="special-features">
             <h2>What's special</h2>
@@ -89,6 +92,7 @@
 
     <script>
         let properties;
+        let currentId = 1;
 
         fetch('properties.json')
             .then(response => response.json())
@@ -98,12 +102,15 @@
             });
 
         function loadHomeById(id) {
+            currentId = id
             const home = properties.find(home => home.id === id);
             if (!home) return;
 
             document.getElementById('price').textContent = home.price;
             document.getElementById('address').textContent = home.address;
             document.getElementById('main-image').src = home.mainImage;
+            document.getElementById('second-image').src = home.imageGallery[0];
+            document.getElementById('third-image').src = home.imageGallery[1];
             document.getElementById('home-price').value = parseFloat(home.price.replace(/[^0-9.-]+/g, ""));
 
             document.getElementById('features').innerHTML = `
@@ -183,6 +190,11 @@
             }
 
             document.getElementById('estimated-payment').textContent = `$${monthlyPayment.toFixed(2)} per month`;
+        }
+
+        function openPhotoGallery(id) {
+
+            window.open(`photo-gallery.html?propertyId=${currentId}`, '_blank');
         }
 
     </script>
