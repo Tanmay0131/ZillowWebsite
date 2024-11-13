@@ -5,12 +5,20 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+button:hover{
+    background-color: rgb(240, 194, 95) !important;
+}
+
+#similar-homes-list:hover{
+    cursor: pointer;
+}
+
 body {
     margin: 0;
     background-color: #e0d3d3;
     font-family: Arial, sans-serif;
 }
-
+  
 .nav-bar {
     height: 50px;
     background-color: rgb(153, 129, 129);
@@ -22,10 +30,14 @@ body {
 }
 
 .nav-bar .logo {
+    font-family: "Rubik Puddles", system-ui;
+    font-weight: 400;
     font-size: 1.5em;
     font-weight: bold;
-    color: #945734;
+    color: white;
 }
+
+
 
 .nav-links a, #left-nav > a, nav > a {
     margin-left: 20px;
@@ -33,7 +45,7 @@ body {
     text-decoration: none;
     font-size: 1em;
     transition: all 0.05s ease-in;
-    color: #945734;
+    color: white;
 }
 
 #left-nav {
