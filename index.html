@@ -94,16 +94,33 @@
         let properties;
         let currentId = 1;
 
+        function getIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.get("Id")){
+                currentId = parseInt(urlParams.get("Id"));
+                return urlParams.get("Id");
+            } else {
+                return '1';
+            }
+        }
+
+        function updateUrlWithId(id) {
+            const url = new URL(window.location);
+            url.searchParams.set('Id', id);
+            window.history.pushState({}, '', url);
+        }
+
         fetch('properties.json')
             .then(response => response.json())
             .then(data => {
                 properties = data.homes;
-                loadHomeById("1"); 
+                loadHomeById(getIdFromUrl()); 
             });
 
         function loadHomeById(id) {
             currentId = id
             const home = properties.find(home => home.id === id);
+            updateUrlWithId(currentId)
             if (!home) return;
 
             document.getElementById('price').textContent = home.price;
